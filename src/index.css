@@ -1,6 +1,21 @@
 @import "tailwindcss";
 
+/* Tailwind v4 defaults `dark:` to the OS setting. This makes it follow the
+   `.dark` class instead, so the toggle in the navbar actually works. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 html {
   scroll-behavior: smooth;
+  /* keeps section headings clear of the fixed navbar */
+  scroll-padding-top: 5rem;
 }
 
+body {
+  background-color: var(--color-white);
+  color: var(--color-gray-900);
+}
+
+.dark body {
+  background-color: var(--color-gray-900);
+  color: var(--color-white);
+}

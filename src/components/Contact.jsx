@@ -1,22 +1,43 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { site } from "../config";
+import { sendMessage, isFormConfigured } from "../services/contact";
+
+const EMPTY = { name: "", email: "", message: "" };
 
 const Contact = () => {
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [sent, setSent] = useState(false);
+  const [form, setForm] = useState(EMPTY);
+  const [status, setStatus] = useState("idle"); // idle | sending | sent | fallback | error
+  const [error, setError] = useState("");
   const [copied, setCopied] = useState(false);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  // No backend, so we hand the message to the visitor's mail client.
-  // That fails silently for anyone without one — hence the copyable address below.
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`Portfolio enquiry from ${form.name}`);
-    const body = encodeURIComponent(`${form.message}\n\n— ${form.name}\n${form.email}`);
-    window.location.href = `mailto:${site.email}?subject=${subject}&body=${body}`;
-    setSent(true);
+
+    if (!isFormConfigured) {
+      // No API key: hand off to the visitor's mail client and be honest about it.
+      const subject = encodeURIComponent(`Portfolio enquiry from ${form.name}`);
+      const body = encodeURIComponent(`${form.message}\n\n— ${form.name}\n${form.email}`);
+      window.location.href = `mailto:${site.email}?subject=${subject}&body=${body}`;
+      setStatus("fallback");
+      return;
+    }
+
+    setStatus("sending");
+    setError("");
+
+    try {
+      await sendMessage(form);
+      setStatus("sent");
+      setForm(EMPTY);
+    } catch (err) {
+      // Keep the reason in the console for you; show the visitor something human.
+      console.error("[contact] send failed:", err);
+      setError("The message couldn't be sent just now.");
+      setStatus("error");
+    }
   };
 
   const copyEmail = async () => {
@@ -25,11 +46,11 @@ const Contact = () => {
       setCopied(true);
       window.setTimeout(() => setCopied(false), 2000);
     } catch {
-      // Clipboard blocked (insecure context or permissions) — the address is
-      // visible on screen either way, so the visitor can select it manually.
       setCopied(false);
     }
   };
+
+  const sending = status === "sending";
 
   return (
     <motion.section
@@ -100,7 +121,8 @@ const Contact = () => {
           value={form.name}
           onChange={handleChange}
           required
-          className="p-3 border rounded border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+          disabled={sending}
+          className="p-3 border rounded border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white disabled:opacity-60"
         />
         <input
           type="email"
@@ -109,7 +131,8 @@ const Contact = () => {
           value={form.email}
           onChange={handleChange}
           required
-          className="p-3 border rounded border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+          disabled={sending}
+          className="p-3 border rounded border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white disabled:opacity-60"
         />
         <textarea
           name="message"
@@ -118,21 +141,49 @@ const Contact = () => {
           onChange={handleChange}
           rows="5"
           required
-          className="p-3 border rounded border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+          disabled={sending}
+          className="p-3 border rounded border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white disabled:opacity-60"
         />
         <motion.button
           type="submit"
-          whileHover={{ scale: 1.02 }}
+          disabled={sending}
+          whileHover={{ scale: sending ? 1 : 1.02 }}
           whileTap={{ scale: 0.98 }}
-          className="px-6 py-3 bg-purple-600 text-white rounded font-medium hover:bg-purple-700 transition"
+          className="px-6 py-3 bg-purple-600 text-white rounded font-medium hover:bg-purple-700 transition disabled:opacity-60 disabled:cursor-not-allowed"
         >
-          Send message
+          {sending ? "Sending…" : "Send message"}
         </motion.button>
 
-        {sent && (
+        {status === "sent" && (
+          <p
+            role="status"
+            className="text-sm text-center rounded border border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/30 p-4 text-green-800 dark:text-green-300"
+          >
+            Message sent. I'll reply to the address you left.
+          </p>
+        )}
+
+        {status === "fallback" && (
           <div className="text-sm text-center rounded border border-purple-200 dark:border-purple-800 bg-purple-50 dark:bg-purple-900/30 p-4">
             <p className="text-gray-800 dark:text-gray-200 mb-2">
               Your message is ready in your mail app. If it didn't open, email me directly:
+            </p>
+            <a
+              href={`mailto:${site.email}`}
+              className="font-medium text-purple-700 dark:text-purple-300 hover:underline break-all"
+            >
+              {site.email}
+            </a>
+          </div>
+        )}
+
+        {status === "error" && (
+          <div
+            role="alert"
+            className="text-sm text-center rounded border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/30 p-4"
+          >
+            <p className="text-gray-800 dark:text-gray-200 mb-2">
+              {error} You can email me directly instead:
             </p>
             <a
               href={`mailto:${site.email}`}

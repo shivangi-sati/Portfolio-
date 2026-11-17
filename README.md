@@ -25,10 +25,25 @@ npm run preview  # preview the production build
 All personal details live in one file: **`src/config.js`** — name, role, email, GitHub, LinkedIn,
 résumé path, availability line.
 
-Two things to do before you deploy:
+Before you deploy:
 
-1. Set `email` in `src/config.js` (it ships as a placeholder and warns in the console).
-2. Drop your CV into `public/resume.pdf` so the Résumé buttons work.
+1. Drop your CV into `public/resume.pdf` so the Résumé buttons work.
+2. Optional — make the contact form deliver mail. Copy `.env.example` to `.env` and set
+   `VITE_WEB3FORMS_KEY` (free key from [web3forms.com](https://web3forms.com), mailed to you instantly).
+   **Without a key the form still works** — it falls back to opening the visitor's mail client.
+
+## Contact form
+
+`src/services/contact.js` posts to Web3Forms when a key is present, with the three real states wired up:
+idle, sending, and error. On failure the submission is not silently swallowed — the UI shows a friendly
+message and offers the email address as a fallback.
+
+The key is baked into the client bundle at build time, so it is public. That is how Web3Forms works; a
+key can only deliver to the address it was registered with. It is not a secret, but it is still kept out
+of git via `.gitignore`.
+
+To deploy the working form, add `VITE_WEB3FORMS_KEY` in **Vercel → Project → Settings → Environment
+Variables** and redeploy — Vite bakes env vars at build time, so changing it requires a new build.
 
 ## Structure
 

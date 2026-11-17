@@ -30,7 +30,7 @@ const About = () => {
       <h2 className="text-3xl font-bold mb-8 text-center">About Me</h2>
 
       <p className="text-gray-700 dark:text-gray-200 text-lg leading-relaxed mb-5">
-        I build frontends with React, JavaScript and TypeScript — and I debug them like someone who
+        I build frontends with React, JavaScript and Tailwind CSS — and I debug them like someone who
         has had to answer for them in production. For 3.5 years at TCS I supported live enterprise
         React applications: reproducing UI state bugs from vague user reports, tracing API
         integration failures, and verifying fixes across browsers before release.

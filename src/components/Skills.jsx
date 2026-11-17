@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 const groups = [
   {
     label: "Languages",
-    items: ["JavaScript (ES6+)", "TypeScript", "HTML5", "CSS3"],
+    items: ["JavaScript (ES6+)", "TypeScript (working knowledge)", "HTML5", "CSS3"],
   },
   {
     label: "Frontend",

@@ -5,10 +5,10 @@
 export const site = {
   name: "Shivangi Sati",
   role: "Frontend Developer",
-  stack: "React · TypeScript · Tailwind CSS",
+  stack: "React · JavaScript · Tailwind CSS",
   tagline:
     "I've spent 3.5 years inside production React apps finding what breaks. Now I build them.",
-  location: "Uttar Pradesh, India",
+  location: "Ghaziabad, NCR, India",
 
   email: "shivangisati7@gmail.com",
 
@@ -17,7 +17,7 @@ export const site = {
 
   resume: "/resume.pdf",
 
-  availability: "Open to Frontend roles · Immediate joiner · Open to relocation",
+  availability: "Open to Frontend roles · Remote / NCR · Immediate joiner",
 };
 
 /**

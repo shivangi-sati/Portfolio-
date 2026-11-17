@@ -10,7 +10,7 @@ export const site = {
     "I've spent 3.5 years inside production React apps finding what breaks. Now I build them.",
   location: "Uttar Pradesh, India",
 
-  email: "shivangisati1998@gmail.com",
+  email: "shivangisati7@gmail.com",
 
   github: "https://github.com/shivangi-sati",
   linkedin: "https://www.linkedin.com/in/shivangi-sati-669951199/",

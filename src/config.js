@@ -21,6 +21,18 @@ export const site = {
   availability: "Open to Frontend roles · Immediate joiner · Open to relocation",
 };
 
+/**
+ * Web3Forms access key (free from https://web3forms.com).
+ *
+ * Paste it here rather than in a Vercel environment variable. This value is
+ * public by design: it is only an alias for `site.email` and can deliver mail
+ * to that address alone, so exposing it in the bundle is safe. Keeping it in
+ * source avoids Vercel's "public prefix" warning on VITE_ variables.
+ *
+ * Leave empty to keep the form on its mailto: fallback.
+ */
+export const web3formsKey = "";
+
 if (site.email.includes("YOUR_EMAIL_HERE")) {
   console.warn(
     "[portfolio] site.email is still a placeholder — set it in src/config.js before deploying."

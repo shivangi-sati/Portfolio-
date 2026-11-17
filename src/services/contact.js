@@ -1,16 +1,19 @@
 /**
  * Contact form transport.
  *
- * Web3Forms is used when VITE_WEB3FORMS_KEY is set (see .env.example).
- * Without a key the UI falls back to a mailto: link, so the site never breaks.
+ * The Web3Forms key is read from VITE_WEB3FORMS_KEY if present, otherwise from
+ * `web3formsKey` in src/config.js. Without a key the UI falls back to a mailto:
+ * link, so the site never breaks.
  *
- * Note: Vite inlines env vars into the client bundle, so this key is public by
- * design. That is how Web3Forms works — it is not a secret, and it can only
- * send mail to the address it was registered with.
+ * Either way the key ends up in the client bundle — it is public by design.
+ * That is how Web3Forms works: it can only send mail to the address it was
+ * registered with.
  */
+import { web3formsKey } from "../config";
+
 const ENDPOINT = "https://api.web3forms.com/submit";
 
-const key = (import.meta.env.VITE_WEB3FORMS_KEY ?? "").trim();
+const key = (import.meta.env.VITE_WEB3FORMS_KEY || web3formsKey || "").trim();
 
 export const isFormConfigured = key.length > 0;
 

@@ -28,8 +28,9 @@ résumé path, availability line.
 Before you deploy:
 
 1. Drop your CV into `public/resume.pdf` so the Résumé buttons work.
-2. Optional — make the contact form deliver mail. Copy `.env.example` to `.env` and set
-   `VITE_WEB3FORMS_KEY` (free key from [web3forms.com](https://web3forms.com), mailed to you instantly).
+2. Optional — make the contact form deliver mail. Get a free key from
+   [web3forms.com](https://web3forms.com), then paste it into `web3formsKey` in
+   **`src/config.js`** (recommended), or set `VITE_WEB3FORMS_KEY` in a local `.env`.
    **Without a key the form still works** — it falls back to opening the visitor's mail client.
 
 ## Contact form
@@ -38,12 +39,13 @@ Before you deploy:
 idle, sending, and error. On failure the submission is not silently swallowed — the UI shows a friendly
 message and offers the email address as a fallback.
 
-The key is baked into the client bundle at build time, so it is public. That is how Web3Forms works; a
-key can only deliver to the address it was registered with. It is not a secret, but it is still kept out
-of git via `.gitignore`.
+The key is baked into the client bundle, so it is public. That is how Web3Forms works; a key can only
+deliver to the address it was registered with. It is not a secret, which is why it lives in `src/config.js`
+next to the email address it belongs to.
 
-To deploy the working form, add `VITE_WEB3FORMS_KEY` in **Vercel → Project → Settings → Environment
-Variables** and redeploy — Vite bakes env vars at build time, so changing it requires a new build.
+Keeping it there instead of in a Vercel environment variable is deliberate: Vercel warns (and can refuse
+to save) when a variable uses a framework's public prefix such as `VITE_`, and that prefix is exactly what
+Vite requires to expose a value to the browser. Putting a public value in source sidesteps the mismatch.
 
 ## Structure
 

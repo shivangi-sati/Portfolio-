@@ -31,7 +31,7 @@ export const site = {
  *
  * Leave empty to keep the form on its mailto: fallback.
  */
-export const web3formsKey = "";
+export const web3formsKey = '1bdd4e56-1525-4263-98fe-b42290d6f5a7';
 
 if (site.email.includes("YOUR_EMAIL_HERE")) {
   console.warn(

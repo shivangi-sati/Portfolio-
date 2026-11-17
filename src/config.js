@@ -15,7 +15,6 @@ export const site = {
   github: "https://github.com/shivangi-sati",
   linkedin: "https://www.linkedin.com/in/shivangi-sati-669951199/",
 
-  // Drop your PDF into /public as resume.pdf and this link works.
   resume: "/resume.pdf",
 
   availability: "Open to Frontend roles · Immediate joiner · Open to relocation",
@@ -24,12 +23,15 @@ export const site = {
 /**
  * Web3Forms access key (free from https://web3forms.com).
  *
- * Paste it here rather than in a Vercel environment variable. This value is
- * public by design: it is only an alias for `site.email` and can deliver mail
- * to that address alone, so exposing it in the bundle is safe. Keeping it in
- * source avoids Vercel's "public prefix" warning on VITE_ variables.
+ * IMPORTANT: Web3Forms delivers submissions to the email address that was
+ * entered when THIS KEY was created. Changing `site.email` above only changes
+ * the address shown on the site and used by the mailto: fallback — it does NOT
+ * change the form's delivery inbox. To move delivery to a new address, create a
+ * new key with that address and paste it here.
  *
- * Leave empty to keep the form on its mailto: fallback.
+ * The key is public by design: it can only send mail to the address it was
+ * issued for. Keeping it here (rather than in a Vercel env var) avoids Vercel's
+ * warning about the VITE_ public prefix.
  */
 export const web3formsKey = 'bc223382-d525-447f-89cc-ebb0ca47fb70';
 

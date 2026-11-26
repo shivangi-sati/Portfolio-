@@ -14,6 +14,17 @@ const projects = [
     featured: true,
   },
   {
+    title: "Cartly",
+    subtitle: "React storefront",
+    description:
+      "Product catalog with debounced search, URL-synced filters and sorting, explicit loading/error/empty states and AbortController-based fetches. Cart, wishlist, SAVE10 coupon, a validated 3-step demo checkout and order history, with 16 Vitest tests on the pure catalog logic.",
+    stack: ["React", "JavaScript", "Tailwind CSS", "React Router", "Vitest"],
+    live: "https://cartly-six-eosin.vercel.app/",
+    code: "https://github.com/shivangi-sati/cartly",
+    gradient: "from-blue-500 to-cyan-400",
+    featured: true,
+  },
+  {
     title: "Aloura",
     subtitle: "Lifestyle & productivity app",
     description:

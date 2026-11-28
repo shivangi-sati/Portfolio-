@@ -26,10 +26,10 @@ const projects = [
   },
   {
     title: "Aloura",
-    subtitle: "Lifestyle & productivity app",
+    subtitle: "Connected wellbeing app · my own idea",
     description:
-      "Mobile-first app for tasks, reminders, mood and wellness tracking. Global state lives in a single Context store with actions isolated from presentation, so new trackers can be added without touching existing screens.",
-    stack: ["React", "Context API", "Tailwind CSS"],
+      "Turns separate trackers into one daily rhythm: tasks, mood, self-care, cycle phase and learning feed a Daily Balance score with a suggested next step. One Context store drives editable tasks, notes, attachments, Pomodoro sessions, a heatmap and a live mood chart.",
+    stack: ["React", "JavaScript", "Context API", "Tailwind CSS", "Vitest"],
     live: "https://aloura-two.vercel.app/",
     code: "https://github.com/shivangi-sati/Aloura",
     gradient: "from-rose-500 to-orange-400",
